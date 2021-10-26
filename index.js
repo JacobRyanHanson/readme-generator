@@ -2,49 +2,45 @@ import inquirer from "inquirer";
 
 import generateMarkdown from "./src/generateMarkdown.js";
 
-titleAndDescription().then(function (response) {
-    collectSteps().then(function (answers) {
-        response.steps = answers;
-        return response;
-    }).then(function (combinedResponse) {
-        usage().then(function (answers) {
-            combinedResponse.usage = answers.usage;
-            return combinedResponse;
+init();
+
+function init() {
+    titleAndDescription().then(function (response) {
+        collectSteps().then(function (answers) {
+            response.steps = answers;
+            return response;
         }).then(function (combinedResponse) {
-            collectUsageExamples().then(function (answers) {
-                combinedResponse.usageExamples = answers;
+            usage().then(function (answers) {
+                combinedResponse.usage = answers.usage;
                 return combinedResponse;
-            }).then (function (combinedResponse) {
-                license().then(function (answers) {
-                    combinedResponse.license = answers.license;
+            }).then(function (combinedResponse) {
+                collectUsageExamples().then(function (answers) {
+                    combinedResponse.usageExamples = answers;
                     return combinedResponse;
                 }).then(function (combinedResponse) {
-                    collectContributors().then(function (answers) {
-                        combinedResponse.contributors = answers;
+                    license().then(function (answers) {
+                        combinedResponse.license = answers.license;
                         return combinedResponse;
                     }).then(function (combinedResponse) {
-                        collectTests().then(function (answers) {
-                            combinedResponse.tests = answers;
+                        contributing().then(function (answers) {
+                            combinedResponse.contribute = answers.contribute;
                             return combinedResponse;
                         }).then(function (combinedResponse) {
-                            questions().then(function (answers) {
-                                combinedResponse.questions = answers;
+                            collectTests().then(function (answers) {
+                                combinedResponse.tests = answers;
                                 return combinedResponse;
-                            }).then(generateMarkdown).then(console.log);
+                            }).then(function (combinedResponse) {
+                                questions().then(function (answers) {
+                                    combinedResponse.questions = answers;
+                                    return combinedResponse;
+                                }).then(generateMarkdown).then(console.log);
+                            });
                         });
                     });
                 });
             });
         });
     });
-});
-
-// Calls function to initialize app.
-init();
-
-// TODO: Create a function to initialize app
-function init() {
-    
 }
 
 // TODO: Create a function to write README file
@@ -60,12 +56,28 @@ function titleAndDescription() {
         {
             type: "input",
             name: "title",
-            message: "Enter the title of the project: "
+            message: "Enter the title of the project: ",
+            validate: function (titleInput) {
+                if (titleInput) {
+                    return true;
+                } else {
+                    console.log("Please enter a title!");
+                    return false;
+                }
+            }
         },
         {
             type: "input",
             name: "description",
-            message: "Enter the description of the project: "
+            message: "Enter the description of the project: ",
+            validate: function (descriptionInput) {
+                if (descriptionInput) {
+                    return true;
+                } else {
+                    console.log("Please enter a description!");
+                    return false;
+                }
+            }
         }
     ];
     return inquirer.prompt(prompts);
@@ -131,6 +143,7 @@ function license() {
             name: "license",
             message: "Select a license: ",
             choices: [
+                "None (N/A)",
                 "ISC (isc)",
                 "MIT (mit)",
                 "Academic Free License v3.0 (afl-3.0)",
@@ -172,21 +185,15 @@ function license() {
     return inquirer.prompt(prompt);
 }
 
-function collectContributors(contributors) {
-    const prompts = [
+function contributing() {
+    const prompt = [
         {
             type: "input",
-            name: "contributor",
-            message: "Enter a contributor: "
-        },
-        {
-            type: "confirm",
-            name: "again",
-            message: "Enter another contributor?: ",
-            default: false
+            name: "contribute",
+            message: "Enter contribution guidlines: "
         }
     ];
-    return repeat(contributors, prompts);
+    return inquirer.prompt(prompt);
 }
 
 function collectTests(tests) {
@@ -216,6 +223,11 @@ function questions() {
             type: "input",
             name: "email",
             message: "Enter your email address: "
+        },
+        {
+            type: "input",
+            name: "contact",
+            message: "Enter additional contact instructions for further questions: "
         }
     ];
     return inquirer.prompt(prompts);
@@ -238,11 +250,6 @@ function repeat(responses, prompts) {
             responses.push(screenshot);
             if (answers.again) {
                 return collectUsageExamples(responses);
-            }
-        } else if (answers.contributor) {
-            responses.push(answers.contributor);
-            if (answers.again) {
-                return collectContributors(responses);
             }
         } else if (answers.test) {
             responses.push(answers.test);
