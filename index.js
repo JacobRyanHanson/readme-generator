@@ -250,7 +250,7 @@ function repeat(responses, prompts) {
             }
         } else if (answers.usageExample) {
             responses.push(answers.usageExample);
-            const screenshot = "![" + answers.altText + "](assets/images/" + answers.screenshot + ")";
+            const screenshot = "![" + answers.altText + "](./assets/images/" + answers.screenshot + ")";
             responses.push(screenshot);
             if (answers.again) {
                 return collectUsageExamples(responses);

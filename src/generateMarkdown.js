@@ -57,8 +57,8 @@ function generateSteps(steps) {
 	let output = "";
 	if (steps.length > 0) {
 		output += "## Installation\n";
-		steps.forEach(function (element) {
-			output += (element + "<br/>\n");
+		steps.forEach(function (element, index) {
+			output += (index + 1 + ". " + element + "<br/>\n");
 		});
 	} 
 	return output;
