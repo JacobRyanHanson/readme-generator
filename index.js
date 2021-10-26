@@ -1,7 +1,6 @@
-const { createPromptModule } = require("inquirer");
-const inquirer = require("inquirer");
+import inquirer from "inquirer";
 
-const generateMarkdown = require("./src/generateMarkdown.js");
+import generateMarkdown from "./src/generateMarkdown.js";
 
 titleAndDescription().then(function (response) {
     collectSteps().then(function (answers) {
@@ -15,28 +14,23 @@ titleAndDescription().then(function (response) {
             collectUsageExamples().then(function (answers) {
                 combinedResponse.usageExamples = answers;
                 return combinedResponse;
-            }).then(function (combinedResponse) {
-                collectScreenshots().then(function (answers) {
-                    combinedResponse.screenshots = answers;
+            }).then (function (combinedResponse) {
+                license().then(function (answers) {
+                    combinedResponse.license = answers.license;
                     return combinedResponse;
-                }).then (function (combinedResponse) {
-                    license().then(function (answers) {
-                        combinedResponse.license = answers.license;
+                }).then(function (combinedResponse) {
+                    collectContributors().then(function (answers) {
+                        combinedResponse.contributors = answers;
                         return combinedResponse;
                     }).then(function (combinedResponse) {
-                        collectContributors().then(function (answers) {
-                            combinedResponse.contributors = answers;
+                        collectTests().then(function (answers) {
+                            combinedResponse.tests = answers;
                             return combinedResponse;
                         }).then(function (combinedResponse) {
-                            collectTests().then(function (answers) {
-                                combinedResponse.tests = answers;
+                            questions().then(function (answers) {
+                                combinedResponse.questions = answers;
                                 return combinedResponse;
-                            }).then(function (combinedResponse) {
-                                questions().then(function (answers) {
-                                    combinedResponse.questions = answers;
-                                    return combinedResponse;
-                                }).then(console.log);
-                            });
+                            }).then(generateMarkdown).then(console.log);
                         });
                     });
                 });
@@ -44,6 +38,22 @@ titleAndDescription().then(function (response) {
         });
     });
 });
+
+// Calls function to initialize app.
+init();
+
+// TODO: Create a function to initialize app
+function init() {
+    
+}
+
+// TODO: Create a function to write README file
+function writeToFile(fileName, data) {
+
+}
+
+
+
 
 function titleAndDescription() {
     const prompts = [
@@ -96,6 +106,15 @@ function collectUsageExamples(examples) {
             message: "Enter an example for use."
         },
         {
+            type: "input",
+            name: "screenshot",
+            message: "Enter the name of a screenshot (with file extension) and ensure it's located under [root/assets/images]: "
+        }, {
+            type: "input",
+            name: "altText",
+            message: "Enter the alt text for the screenshot: "
+        },
+        {
             type: "confirm",
             name: "again",
             message: "Enter another example?: ",
@@ -105,28 +124,6 @@ function collectUsageExamples(examples) {
     return repeat(examples, prompts)
 }
 
-function collectScreenshots(screenshots) {
-    const prompts = [
-        {
-            type: "input",
-            name: "screenshot",
-            message: "Enter the name of a screenshot (with file extension) and ensure its located under [root/assets/images]: "
-        }, 
-        {
-            type: "input",
-            name: "altText",
-            message: "Enter the alt text for the screenshot: "
-        },
-        {
-            type: "confirm",
-            name: "again",
-            message: "Enter another screenshot?: ",
-            default: false
-        }
-    ];
-    return repeat(screenshots, prompts);
-}
-
 function license() {
     const prompt = [
         {
@@ -134,40 +131,40 @@ function license() {
             name: "license",
             message: "Select a license: ",
             choices: [
-                "ISC",
-                "MIT",
-                "Academic Free License v3.0",
-                "Apache license 2.0",
-                "Artistic license 2.0",
-                "Boost Software License 1.0	",
-                "BSD 2-clause \"Simplified\" license",
-                "BSD 3-clause \"New\" or \"Revised\" license",
-                "BSD 3-clause Clear license",
-                "Creative Commons license family",
-                "Creative Commons Zero v1.0 Universal",
-                "Creative Commons Attribution 4.0",
-                "Creative Commons Attribution Share Alike 4.0",
-                "Do What The F*ck You Want To Public License",
-                "Educational Community License v2.0",
-                "Eclipse Public License 1.0	",
-                "Eclipse Public License 2.0	",
-                "European Union Public License 1.1",
-                "GNU Affero General Public License v3.0",
-                "GNU General Public License family",
-                "GNU General Public License v2.0",
-                "GNU General Public License v3.0",
-                "GNU Lesser General Public License family",
-                "GNU Lesser General Public License v2.1",
-                "GNU Lesser General Public License v3.0",
-                "LaTeX Project Public License v1.3c",
-                "Microsoft Public License",
-                "Mozilla Public License 2.0",
-                "Open Software License 3.0",
-                "PostgreSQL License",
-                "SIL Open Font License 1.1",
-                "University of Illinois/NCSA Open Source License",
-                "The Unlicense",
-                "zLib License",
+                "ISC (isc)",
+                "MIT (mit)",
+                "Academic Free License v3.0 (afl-3.0)",
+                "Apache license 2.0 (apache-2.0)",
+                "Artistic license 2.0 (artistic-2.0)",
+                "Boost Software License 1.0	(bsl-1.0)",
+                "BSD 2-clause \"Simplified\" license (bsd-2-clause)",
+                "BSD 3-clause \"New\" or \"Revised\" license (bsd-3-clause)",
+                "BSD 3-clause Clear license (bsd-3-clause-clear)",
+                "Creative Commons license family (cc)",
+                "Creative Commons Zero v1.0 Universal (cc0-1.0)",
+                "Creative Commons Attribution 4.0 (cc-by-4.0)",
+                "Creative Commons Attribution Share Alike 4.0 (	cc-by-sa-4.0)",
+                "Do What The F*ck You Want To Public License (wtfpl)",
+                "Educational Community License v2.0 (ecl-2.0)",
+                "Eclipse Public License 1.0	(epl-1.0)",
+                "Eclipse Public License 2.0	(epl-2.0)",
+                "European Union Public License 1.1 (eupl-1.1)",
+                "GNU Affero General Public License v3.0 (agpl-3.0)",
+                "GNU General Public License family (gpl)",
+                "GNU General Public License v2.0 (gpl-2.0)",
+                "GNU General Public License v3.0 (gpl-3.0)",
+                "GNU Lesser General Public License family (lgpl)",
+                "GNU Lesser General Public License v2.1 (lgpl-2.1)",
+                "GNU Lesser General Public License v3.0 (lgpl-3.0)",
+                "LaTeX Project Public License v1.3c (lppl-1.3c)",
+                "Microsoft Public License (ms-pl)",
+                "Mozilla Public License 2.0 (mpl-2.0)",
+                "Open Software License 3.0 (osl-3.0)",
+                "PostgreSQL License (postgresql)",
+                "SIL Open Font License 1.1 (ofl-1.1)",
+                "University of Illinois/NCSA Open Source License (ncsa)",
+                "The Unlicense (unlicense)",
+                "zLib License (zlib)",
                 new inquirer.Separator()
             ]
         }
@@ -237,14 +234,10 @@ function repeat(responses, prompts) {
             }
         } else if (answers.usageExample) {
             responses.push(answers.usageExample);
-            if (answers.again) {
-                return collectUsageExamples(responses);
-            }
-        } else if (answers.screenshot) {
-            screenshot = "![" + answers.altText + "](assets/images/" + answers.screenshot + ")";
+            const screenshot = "![" + answers.altText + "](assets/images/" + answers.screenshot + ")";
             responses.push(screenshot);
             if (answers.again) {
-                return collectScreenshots(responses);
+                return collectUsageExamples(responses);
             }
         } else if (answers.contributor) {
             responses.push(answers.contributor);
@@ -259,17 +252,4 @@ function repeat(responses, prompts) {
         }
         return responses;
     });
-}
-
-// Function call to initialize app
-init();
-
-// TODO: Create a function to initialize app
-function init() {
-    // console.log(generateMarkdown(testObj));
-}
-
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {
-
 }
