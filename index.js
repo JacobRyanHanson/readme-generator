@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-
+import fs from 'fs';
 import generateMarkdown from "./src/generateMarkdown.js";
 
 init();
@@ -33,7 +33,10 @@ function init() {
                                 questions().then(function (answers) {
                                     combinedResponse.questions = answers;
                                     return combinedResponse;
-                                }).then(generateMarkdown).then(console.log);
+                                }).then(generateMarkdown).then(function (markdown) {
+                                    console.log(markdown)
+                                    writeToFile("./dist/README.md", markdown);
+                                });
                             });
                         });
                     });
@@ -43,13 +46,14 @@ function init() {
     });
 }
 
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {
-
+function writeToFile(fileName, content) {
+    fs.writeFile(fileName, content, function (error) {
+        if (error) {
+            console.error(error);
+            return;
+        }
+    });
 }
-
-
-
 
 function titleAndDescription() {
     const prompts = [
@@ -105,7 +109,7 @@ function usage() {
         {
         type: "input",
         name: "usage",
-        message: "Enter instructions for use."
+        message: "Enter instructions for use: "
     }];
     return inquirer.prompt(prompt);
 }
@@ -115,7 +119,7 @@ function collectUsageExamples(examples) {
         {
             type: "input",
             name: "usageExample",
-            message: "Enter an example for use."
+            message: "Enter an example of use: "
         },
         {
             type: "input",

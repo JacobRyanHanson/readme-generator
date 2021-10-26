@@ -1,5 +1,4 @@
 function generateMarkdown(data) {
-	console.log(data)
 	return `# ${data.title}
 
 ## Description
@@ -12,7 +11,7 @@ ${generateUsage(data)}
 ${renderLicenseSection(data.license.split(" "))}
 ${generateContributing(data.contribute)}
 ${generateTests(data.tests)}
-${generateQuestions(data)}
+${generateQuestions(data.questions)}
 `;
 }
 
@@ -29,7 +28,7 @@ function generateTableOfContents(data, license) {
 	license[1] = license[1].replace("(", "").replace(")", "");
 	let output = "";
 	const {username, email} = data.questions;
-	if (data.steps.length > 0 || data.usage || data.license[1] !== "N/A" || data.contribute 
+	if (data.steps.length > 0 || data.usage || license[1] !== "N/A" || data.contribute 
 		|| data.tests.lentgh > 0 || username || email) {
 		output += "## Table of Contents\n";
 	}
@@ -59,7 +58,7 @@ function generateSteps(steps) {
 	if (steps.length > 0) {
 		output += "## Installation\n";
 		steps.forEach(function (element) {
-			output += (element + "\n");
+			output += (element + "<br/>\n");
 		});
 	} 
 	return output;
@@ -69,11 +68,12 @@ function generateUsage(data) {
 	let output = "";
 	if (data.usage) {
 		output += "## Usage\n";
-		output += data.usage  + "\n";
+		output += data.usage + "<br/>\n";
 
 		if (data.usageExamples) {
+			output += "### Examples\n"
 			for (let i = 0; i < data.usageExamples.length; i += 2) {
-				output += (data.usageExamples[i] + "\n\n" + data.usageExamples[i + 1]);
+				output += (data.usageExamples[i] + "<br/>\n" + data.usageExamples[i + 1] + "<br/>\n");
 			}
 		}
 	}
@@ -114,23 +114,23 @@ function generateTests(tests) {
 	if (tests.length > 0) {
 		output += "## Tests\n";
 		tests.forEach(function (element) {
-			output += (element + "\n");
+			output += (element + "<br/>\n");
 		});
 	}
 	return output;
 }
 
-function generateQuestions(data) {
+function generateQuestions(questions) {
 	let output = "";
-	if (data.username || data.email) {
+	if (questions.username || questions.email) {
 		output += "## Questions\n";
 	}
-	if (data.username) {
-		output += data.username + "https://github.com/" + data.username + "\n";
+	if (questions.username) {
+		output += questions.username + " (https://github.com/" + questions.username + ")<br/>\n";
 	}
-	if (data.email) {
-		output += data.email + "\n"
-		output += "### Additional Contact Instructions\n" + data.contact;
+	if (questions.email) {
+		output += questions.email + "\n";
+		output += "### Additional Contact Instructions\n" + questions.contact;
 	}
 	return output;
 }
