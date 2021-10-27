@@ -129,7 +129,7 @@ function generateQuestions(questions) {
 		output += questions.username + " (https://github.com/" + questions.username + ")<br/>\n";
 	}
 	if (questions.email) {
-		output += questions.email + "\n";
+		output += "Email: " + questions.email + "\n";
 		output += "### Additional Contact Instructions\n" + questions.contact;
 	}
 	return output;
