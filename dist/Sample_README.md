@@ -19,7 +19,7 @@ A website that offers fitness training services.
 Navigate to https://jacobryanhanson.github.io/run-buddy/. The website is interactive and user friendly so submitting forms and navigating the page is a simple as clicking the labeled buttons and links.<br/>
 ### Examples
 Clicking the links in the upper left corner navigates to the respective section of the page.<br/>
-![run-buddy-nav](./assets/images/run-buddy-nav.png)<br/>
+![run-buddy-nav](../assets/images/run-buddy-nav.png)<br/>
 
 ## License
 This application is covered under the ISC License.
