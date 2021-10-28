@@ -15,8 +15,7 @@ This is an application that generates a README file in the node.js enviornment g
 ## Installation
 1. Clone the repository.
 2. Ensure node.js is installed.
-3. Run the command "nmp init" in the terminal to initialize the enviornment .
-4. Run the command "npm install" to download dependencies.
+3. Run the command "npm install" to download dependencies.
 
 ## Usage
 1. Run the command "node index" to run the file and produce a README.
