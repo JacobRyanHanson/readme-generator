@@ -13,7 +13,7 @@ A website that offers fitness training services.
 * [Questions](#questions)
 
 ## Installation
-1. Not Applicable. This is a live application and is deployed live.<br/>
+1. Not Applicable. This is a live application and requires no instillation.<br/>
 
 ## Usage
 Navigate to https://jacobryanhanson.github.io/run-buddy/. The website is interactive and user friendly so submitting forms and navigating the page is as simple as clicking the labeled buttons and links.<br/>
