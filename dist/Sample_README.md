@@ -16,9 +16,9 @@ A website that offers fitness training services.
 1. Not Applicable. This is a live application and is deployed live.<br/>
 
 ## Usage
-Navigate to https://jacobryanhanson.github.io/run-buddy/. The website is interactive and user friendly so submitting forms and navigating the page is a simple as clicking the labeled buttons and links.<br/>
+Navigate to https://jacobryanhanson.github.io/run-buddy/. The website is interactive and user friendly so submitting forms and navigating the page is as simple as clicking the labeled buttons and links.<br/>
 ### Examples
-Clicking the links in the upper left corner navigates to the respective section of the page.<br/>
+Clicking the links in the upper right corner navigates to the respective section of the page.<br/>
 ![run-buddy-nav](../assets/images/run-buddy-nav.png)<br/>
 
 ## License
