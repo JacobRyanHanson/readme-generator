@@ -26,7 +26,7 @@ This is an application that generates a README file in the node.js enviornment g
 This project uses an ISC License (Link to License: https://choosealicense.com/licenses/isc/)
 
 ## Test
-Look at Sample_README in the sample directory for sample inputs and the result.
+Look at Sample_README in the output directory for sample inputs and the result.
 
 ## Credit
 Made by Jacob Hanson
