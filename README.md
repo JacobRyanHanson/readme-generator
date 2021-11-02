@@ -20,13 +20,13 @@ This is an application that generates a README file in the node.js enviornment g
 ## Usage
 1. Run the command "node index" to run the file and produce a README.
 2. Enter information as prompted.
-3. Look in the distd directory for the resultant README file upon completion.
+3. Look in the output directory for the resultant README file upon completion.
 
 ## License
 This project uses an ISC License (Link to License: https://choosealicense.com/licenses/isc/)
 
 ## Test
-Look at Sample_README in the dist directory for sample inputs and the result.
+Look at Sample_README in the sample directory for sample inputs and the result.
 
 ## Credit
 Made by Jacob Hanson

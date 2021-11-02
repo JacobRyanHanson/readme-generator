@@ -1,9 +1,9 @@
 import inquirer from "inquirer";
 import fs from 'fs';
-import generateMarkdown from "./src/generateMarkdown.js";
+import generateMarkdown from "./assets/js/generateMarkdown.js";
 
 init();
-
+// Asks questions asynchronously building a response object which is ultimately sent to output.
 function init() {
     titleAndDescription().then(function (response) {
         collectSteps().then(function (answers) {
@@ -35,7 +35,7 @@ function init() {
                                     return combinedResponse;
                                 }).then(generateMarkdown).then(function (markdown) {
                                     console.log(markdown)
-                                    writeToFile("./dist/README.md", markdown);
+                                    writeToFile("./output/README.md", markdown);
                                 });
                             });
                         });
@@ -45,7 +45,7 @@ function init() {
         });
     });
 }
-
+// Writes a file to the specified destination.
 function writeToFile(fileName, content) {
     fs.writeFile(fileName, content, function (error) {
         if (error) {
@@ -54,7 +54,7 @@ function writeToFile(fileName, content) {
         }
     });
 }
-
+// Asks user for a title and description.
 function titleAndDescription() {
     const prompts = [
         {
@@ -86,7 +86,7 @@ function titleAndDescription() {
     ];
     return inquirer.prompt(prompts);
 }
-
+// Asks user to enter steps for instillation.
 function collectSteps(steps) {
     const prompts = [
         {
@@ -103,7 +103,7 @@ function collectSteps(steps) {
     ];
     return repeat(steps, prompts);
 }
-
+// Asks user for usage instructions.
 function usage() {
     const prompt = [
         {
@@ -113,7 +113,7 @@ function usage() {
     }];
     return inquirer.prompt(prompt);
 }
-
+// Asks user to enter an example of use and an accompanying screenshot.
 function collectUsageExamples(examples) {
     const prompts = [
         {
@@ -139,7 +139,7 @@ function collectUsageExamples(examples) {
     ];
     return repeat(examples, prompts)
 }
-
+// Prompts the user with a menu from which they can select a license.
 function license() {
     const prompt = [
         {
@@ -188,18 +188,18 @@ function license() {
     ];
     return inquirer.prompt(prompt);
 }
-
+// Asks the user to enter guidelines for contributing.
 function contributing() {
     const prompt = [
         {
             type: "input",
             name: "contribute",
-            message: "Enter contribution guidlines: "
+            message: "Enter contribution guidelines: "
         }
     ];
     return inquirer.prompt(prompt);
 }
-
+// Asks the user to enter tests for the application.
 function collectTests(tests) {
     const prompts = [
         {
@@ -216,7 +216,7 @@ function collectTests(tests) {
     ];
     return repeat(tests, prompts);
 }
-
+// Asks the user for their GitHub username and email.
 function questions() {
     const prompts = [{
             type: "input",
@@ -236,28 +236,37 @@ function questions() {
     ];
     return inquirer.prompt(prompts);
 }
-
+// Loops through prompts that should be repeated.
 function repeat(responses, prompts) {
     if (!responses) {
         responses = [];
     }
 
     return inquirer.prompt(prompts).then(function (answers) {
+        // If the object has steps...
         if (answers.instillation) {
             responses.push(answers.instillation);
+            // And should be repeated...
             if (answers.again) {
+                // Recursively call the function and add new steps.
                 return collectSteps(responses);
             }
         } else if (answers.usageExample) {
+            // If the object has usage examples...
             responses.push(answers.usageExample);
             const screenshot = "![" + answers.altText + "](../assets/images/" + answers.screenshot + ")";
             responses.push(screenshot);
+            // And should be repeated...
             if (answers.again) {
+                // Recursively call the function and add new usage examples.
                 return collectUsageExamples(responses);
             }
+        // If the object has tests... 
         } else if (answers.test) {
             responses.push(answers.test);
+            // And should be repeated...
             if (answers.again) {
+                // Recursively call the function and add new tests.
                 return collectTests(responses);
             }
         }

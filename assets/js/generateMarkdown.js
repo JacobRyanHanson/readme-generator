@@ -1,3 +1,4 @@
+// Generates the markdown for README.md given a data response object.
 function generateMarkdown(data) {
 	return `# ${data.title}
 
@@ -14,7 +15,7 @@ ${generateTests(data.tests)}
 ${generateQuestions(data.questions)}
 `;
 }
-
+// If the user selected a license create a license badge.
 function renderLicenseBadge(license) {
 	license[1] = license[1].replace("(", "").replace(")", "");
 	let output = "";
@@ -23,7 +24,7 @@ function renderLicenseBadge(license) {
 	} 
 	return output;
 }
-
+// Generate a table of contents based on the sections the user choose to fill out, linking them apporpriately.
 function generateTableOfContents(data, license) {
 	license[1] = license[1].replace("(", "").replace(")", "");
 	let output = "";
@@ -52,7 +53,7 @@ function generateTableOfContents(data, license) {
 	}
 	return output;
 }
-
+// If the user entered steps for instillation generate the instillation section and number the steps.
 function generateSteps(steps) {
 	let output = "";
 	if (steps.length > 0) {
@@ -63,7 +64,7 @@ function generateSteps(steps) {
 	} 
 	return output;
 }
-
+// If the user entered usage instructions/examples generate the usage section and include usage instructions/examples.
 function generateUsage(data) {
 	let output = "";
 	if (data.usage) {
@@ -79,7 +80,7 @@ function generateUsage(data) {
 	}
 	return output;
 }
-
+// If the user selected a license a link to a page with more information is generated.
 function renderLicenseSection(license) {
 	license[1] = license[1].replace("(", "").replace(")", "");
 	let output = "";
@@ -91,7 +92,7 @@ For more information visit: ${renderLicenseUrl(license)}
 	} 
 	return output;
 }
-
+// Generates the link to a page with more information on the selected license.
 function renderLicenseUrl(license) {
 	let output = "";
 	if (license[1] !== "N/A") {
@@ -99,7 +100,7 @@ function renderLicenseUrl(license) {
 	} 
 	return output;
 }
-
+// If the user entered guidelines for contributing a contributing section is generated and filled with the guidelines. 
 function generateContributing(contributeGuideLines) {
 	let output = "";
 	if (contributeGuideLines) {
@@ -108,7 +109,7 @@ function generateContributing(contributeGuideLines) {
 	}
 	return output;
 }
-
+// If the user entered tests for the application generate a test section and fill it.
 function generateTests(tests) {
 	let output = "";
 	if (tests.length > 0) {
@@ -119,7 +120,8 @@ function generateTests(tests) {
 	}
 	return output;
 }
-
+// If the user entered an email or GitHub username, generate a questions section and fill it out,
+// incuding additional contact information if necessary.
 function generateQuestions(questions) {
 	let output = "";
 	if (questions.username || questions.email) {
