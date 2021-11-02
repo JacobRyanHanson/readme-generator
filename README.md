@@ -35,4 +35,4 @@ Made by Jacob Hanson
 Note: All commands that need to be run from the terminal in the root directory.
 
 ### Walkthrough Video
-https://user-images.githubusercontent.com/89164466/139342662-d37a8fdc-642e-43d2-88b6-c43bff82788d.mp4
+https://user-images.githubusercontent.com/89164466/139884483-63808c76-d78a-4e2a-ad7b-630c8e818195.mp4
